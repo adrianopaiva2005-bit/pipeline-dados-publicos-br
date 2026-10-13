@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Segredos e configuração local
+.env
+!.env.example
+
+# Dados e bancos locais
+data/
+*.duckdb
+
+# dbt e Airflow
+target/
+dbt_packages/
+logs/
+
+# Editor e sistema
+.vscode/
+.DS_Store
+Thumbs.db
