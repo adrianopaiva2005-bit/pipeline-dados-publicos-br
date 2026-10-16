@@ -1,2 +1,36 @@
 # pipeline-dados-publicos-br
-Pipeline de dados ponta a ponta com dados abertos do Portal da Transparência: ingestão, transformação, testes de qualidade e dashboard.
+
+Pipeline de dados com dados abertos brasileiros: ingestão, camadas bronze/silver/gold em PostgreSQL e análise do Bolsa Família por município.
+
+## Fontes
+
+- IBGE, API de localidades: cadastro de 5.571 municípios.
+- Portal da Transparência: Novo Bolsa Família, competência 202608 (CSV de 1,9 GB, 18.809.420 linhas).
+- IBGE, SIDRA tabela 4709: população do Censo 2022 por município.
+
+Os dados brutos ficam em `data/`, fora do Git. O CSV do Portal contém dados pessoais (CPF, NIS e nomes). O pipeline lê o arquivo em fluxo e agrega por município sem acessar esses campos. Nada pessoal é gravado no banco nem versionado.
+
+## Camadas
+
+- bronze: `ibge_municipios`, `portal_bolsa_familia` (14.694 grupos agregados), `ibge_populacao` (5.570 municípios).
+- silver: `ibge_municipios` e `portal_bolsa_familia`, esta cruzada com o IBGE pelo código SIAFI, com 32 exceções manuais.
+- gold: `bolsa_familia_municipio` (5.571 linhas) e `bolsa_familia_per_capita`.
+
+## Validações
+
+O total de R$ 12.763.249.759,00 e as 18.809.420 parcelas foram conferidos em todas as camadas, sem perda nem duplicação no cruzamento com o IBGE.
+
+## Resultados (competência 202608)
+
+O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capita, Nordeste (R$ 108,42) e Norte (R$ 99,20) ficam acima de Centro-Oeste (R$ 42,48), Sudeste (R$ 42,03) e Sul (R$ 28,65). Em valor absoluto, os maiores municípios são São Paulo, Rio de Janeiro, Salvador, Fortaleza e Manaus. Em per capita, aparecem municípios pequenos do Norte e do Nordeste, como Itaubal (AP), Autazes (AM) e Cachoeira Grande (MA).
+
+## Limitações
+
+- Boa Esperança do Norte (MT) não tem população na tabela do Censo usada e fica sem valor per capita. Recebeu R$ 78.936,00, cerca de 0,0006% do total.
+- A população é de 2022 e os pagamentos são de 2026.
+- Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Esse número ainda não foi confrontado com uma fonte oficial (famílias beneficiárias no painel do MDS) e deve ser lido com cautela.
+- A análise cobre uma única competência, não é série histórica.
+
+## Próximos passos
+
+Testes de qualidade automatizados, orquestração e dashboard.
