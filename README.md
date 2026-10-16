@@ -89,7 +89,7 @@ O app abre em `http://localhost:8501`. As credenciais vêm do `.env`. Nas ordena
 
 ## Testes
 
-Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
+Os testes de qualidade (`uv run pytest -v`, seis testes) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Um sexto teste confere que a soma de `valor_referencia_atual` na gold (R$ 12.742.332.559,00) é igual à soma da silver filtrada por `referencia = competencia`. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
 
 ## Próximos passos
 
