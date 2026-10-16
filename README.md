@@ -43,7 +43,7 @@ Para pular a ingestão e reaproveitar os arquivos já gerados em `data/` (sem co
 
 A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: cada `load_*` limpa os dados que vai recarregar e cada SQL recria suas tabelas, então o pipeline pode ser executado várias vezes sem duplicar valores.
 
-Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. O comportamento sem esse arquivo não foi testado.
+Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. Se o arquivo não existir, o pipeline para nessa etapa com uma mensagem indicando o que fazer, comportamento testado na mesma data.
 
 ## Dashboard
 
@@ -60,4 +60,3 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 ## Próximos passos
 
 - Confrontar com o VIS Data os demais municípios de maior per capita (Autazes, Cachoeira Grande, Serrano do Maranhão e Rodelas) e investigar a diferença pequena observada em Itaubal.
-- Exibir uma mensagem clara quando o CSV do Portal não estiver em `data/` e testar essa situação.
