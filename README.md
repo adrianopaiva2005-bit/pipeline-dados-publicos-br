@@ -31,6 +31,12 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 - Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Esse número ainda não foi confrontado com uma fonte oficial (famílias beneficiárias no painel do MDS) e deve ser lido com cautela.
 - A análise cobre uma única competência, não é série histórica.
 
+## Testes
+
+Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
+
 ## Próximos passos
 
-Testes de qualidade automatizados, orquestração e dashboard.
+- Confrontar a cobertura dos municípios com maior per capita com o número de famílias do painel do MDS.
+- Orquestrar o pipeline de ponta a ponta.
+- Construir um dashboard com os resultados.
