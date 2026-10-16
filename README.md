@@ -59,7 +59,9 @@ No CSV, `MÊS COMPETÊNCIA` é 202608 em todas as linhas e `MÊS REFERÊNCIA` va
 
 O que foi verificado: cada linha do CSV do Portal é um pagamento individual (há colunas de favorecido e valor da parcela, mas nenhuma de família ou domicílio), então a coluna `parcelas` do pipeline conta pagamentos. Nos cinco municípios, o número de NIS distintos é igual ao número de linhas da referência atual, nenhum NIS aparece mais de uma vez nessa referência, e os retroativos não acrescentam NIS novos. Essa checagem foi feita apenas nesses cinco municípios, não no Brasil inteiro.
 
-O que não foi verificado: a causa da diferença com o painel. Não se sabe o que o VIS Data chama de "família" nem como cada fonte trata pagamentos fora do mês de referência. Os valores do VIS Data vêm de capturas de tela, e o arquivo local tem data de modificação de 24/09/2026, então as duas bases podem ser de momentos diferentes.
+O que o MDS declara: a ficha do indicador IN001 (SAGICAD, editada em 29/09/2026), para a qual o ícone de informação do VIS Data aponta, define a unidade estatística como família e o cálculo como "contagem distinta de famílias beneficiárias do Programa Bolsa Família constantes em folha de pagamento do período de referência". A fonte é a folha de pagamento operacionalizada pela Caixa, junto com o Cadastro Único. A ficha prevê revisão retroativa dos valores. No total nacional de agosto de 2026, o painel registra 19.289.215 famílias e R$ 13.056.767.658,00, contra 18.809.420 parcelas e R$ 12.763.249.759,00 no pipeline (+2,6% e +2,3%).
+
+O que não foi verificado: a causa da diferença com o painel. A ficha não diz como a família é identificada na folha (o CSV do Portal não tem coluna de família), como trata parcelas com referência anterior à competência, nem se o Portal e o painel usam a mesma extração. Os valores municipais do VIS Data vêm de capturas de tela, e o arquivo local tem data de modificação de 24/09/2026. Como a ficha admite revisões retroativas, as duas bases podem ser de momentos diferentes, mas isso não foi confirmado.
 
 ## Como executar
 
@@ -89,5 +91,5 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 
 ## Próximos passos
 
-- Obter a definição de "famílias beneficiárias" no VIS Data e compará-la com o CSV. O dicionário do Portal descreve as colunas, mas não define família nem explica as referências anteriores à competência.
+- Procurar documentação que explique como a família é identificada na folha de pagamento e se a base do Portal é a mesma do painel. A ficha IN001 define o indicador, mas não explica a diferença observada.
 - Avaliar o per capita pela referência atual em vez do total de parcelas e verificar se o ranking dos cinco maiores muda.
