@@ -31,6 +31,18 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 - Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Esse número ainda não foi confrontado com uma fonte oficial (famílias beneficiárias no painel do MDS) e deve ser lido com cautela.
 - A análise cobre uma única competência, não é série histórica.
 
+## Como executar
+
+O pipeline completo roda com um único comando, que executa ingestão, carga bronze, silver, gold e os testes de qualidade, parando no primeiro erro:
+
+    uv run python src/pipeline/run_pipeline.py
+
+Para reaproveitar os arquivos já baixados em `data/` (útil porque o CSV do Portal tem cerca de 2 GB):
+
+    uv run python src/pipeline/run_pipeline.py --pular-ingestao
+
+A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: cada `load_*` limpa os dados que vai recarregar e cada SQL recria suas tabelas, então o pipeline pode ser executado várias vezes sem duplicar valores.
+
 ## Testes
 
 Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
