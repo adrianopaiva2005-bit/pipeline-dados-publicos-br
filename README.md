@@ -43,7 +43,7 @@ Para reaproveitar os arquivos já baixados em `data/` (útil porque o CSV do Por
 
 A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: cada `load_*` limpa os dados que vai recarregar e cada SQL recria suas tabelas, então o pipeline pode ser executado várias vezes sem duplicar valores.
 
-As execuções validadas até aqui usaram `--pular-ingestao`; a ingestão do Portal (CSV de ~2 GB) ainda não foi exercitada pelo orquestrador.
+Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. O comportamento sem esse arquivo não foi testado.
 
 ## Dashboard
 
