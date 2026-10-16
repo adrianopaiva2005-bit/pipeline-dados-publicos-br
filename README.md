@@ -43,7 +43,7 @@ Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcenta
 
 ## Comparação com a referência atual
 
-A primeira tabela compara o VIS Data com o total do pipeline, que inclui pagamentos retroativos (referência anterior à competência). A tabela abaixo usa só a referência atual (`referencia = competencia`) em agosto de 2026. As porcentagens usam o valor do pipeline como base, e o sinal indica a diferença do VIS Data em relação a ele.
+A primeira tabela compara o VIS Data com o total do pipeline, que inclui as parcelas com mês de referência anterior à competência (chamadas aqui de retroativas; o dicionário do Portal não usa esse termo). A tabela abaixo usa só as parcelas com as duas colunas iguais (`referencia = competencia`) em agosto de 2026. As porcentagens usam o valor do pipeline como base, e o sinal indica a diferença do VIS Data em relação a ele.
 
 | Município | Parcelas, ref. atual (= NIS distintos) | Famílias (VIS Data) | Diferença na contagem |
 |---|---|---|---|
@@ -55,9 +55,11 @@ A primeira tabela compara o VIS Data com o total do pipeline, que inclui pagamen
 
 Com a referência atual, o VIS Data fica acima do pipeline nos cinco municípios, tanto na contagem quanto no valor. Em Itaubal, a diferença de valor (+4,1%) é maior que a de contagem (+1,0%), e isso não foi explicado.
 
+No CSV, `MÊS COMPETÊNCIA` é 202608 em todas as linhas e `MÊS REFERÊNCIA` varia de 202601 a 202608. As linhas com as duas colunas iguais são 18.778.626 (99,84%). A descrição das colunas no dicionário de dados do Portal (competência como o mês a que a parcela se refere, referência como o mês da folha de pagamento) não esclarece por que há referências anteriores à competência, então o sentido exato delas não foi confirmado. O dicionário também lista a coluna `DATA DISPONIBILIZAÇÃO`, que não existe no arquivo local (data de modificação: 24/09/2026).
+
 O que foi verificado: cada linha do CSV do Portal é um pagamento individual (há colunas de favorecido e valor da parcela, mas nenhuma de família ou domicílio), então a coluna `parcelas` do pipeline conta pagamentos. Nos cinco municípios, o número de NIS distintos é igual ao número de linhas da referência atual, nenhum NIS aparece mais de uma vez nessa referência, e os retroativos não acrescentam NIS novos. Essa checagem foi feita apenas nesses cinco municípios, não no Brasil inteiro.
 
-O que não foi verificado: a causa da diferença com o painel. Não se sabe o que o VIS Data chama de "família" nem como cada fonte trata pagamentos fora do mês de referência. Os valores do VIS Data vêm de capturas de tela, e o CSV foi baixado em 24/09/2026, então as duas bases podem ser de momentos diferentes.
+O que não foi verificado: a causa da diferença com o painel. Não se sabe o que o VIS Data chama de "família" nem como cada fonte trata pagamentos fora do mês de referência. Os valores do VIS Data vêm de capturas de tela, e o arquivo local tem data de modificação de 24/09/2026, então as duas bases podem ser de momentos diferentes.
 
 ## Como executar
 
@@ -87,5 +89,5 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 
 ## Próximos passos
 
-- Obter a definição de "famílias beneficiárias" (VIS Data) e a descrição das colunas do CSV (dicionário de dados do Portal) e compará-las.
+- Obter a definição de "famílias beneficiárias" no VIS Data e compará-la com o CSV. O dicionário do Portal descreve as colunas, mas não define família nem explica as referências anteriores à competência.
 - Avaliar o per capita pela referência atual em vez do total de parcelas e verificar se o ranking dos cinco maiores muda.
