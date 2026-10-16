@@ -55,6 +55,12 @@ def agregar(caminho: Path):
 
 def main():
     caminho = Path(sys.argv[1]) if len(sys.argv) > 1 else CAMINHO_PADRAO
+    if not caminho.exists():
+        raise SystemExit(
+            f"CSV do Portal não encontrado: {caminho}\n"
+            "Baixe o arquivo do Portal da Transparência (Novo Bolsa Família, "
+            "competência 202608) e coloque-o nessa pasta antes de executar."
+        )
     grupos, lidas, descartadas = agregar(caminho)
 
     saida = caminho.with_name(caminho.stem + "_agregado.csv")
