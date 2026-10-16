@@ -10,6 +10,7 @@ load_dotenv()
 VALOR_TOTAL = Decimal("12763249759.00")
 PARCELAS_TOTAL = 18809420
 POPULACAO_TOTAL = 203080756
+VALOR_REFERENCIA_ATUAL = Decimal("12742332559.00")
 
 
 @pytest.fixture(scope="module")
@@ -59,3 +60,15 @@ def test_per_capita_so_boa_esperanca_do_norte_sem_populacao(cur):
 def test_cobertura_nao_passa_de_40_parcelas_por_100_hab(cur):
     cur.execute("SELECT max(parcelas_por_100_hab) FROM gold.bolsa_familia_per_capita")
     assert cur.fetchone()[0] < 40
+
+
+def test_valor_referencia_atual_confere_com_silver(cur):
+    cur.execute("SELECT sum(valor_referencia_atual) FROM gold.bolsa_familia_per_capita")
+    valor_gold = cur.fetchone()[0]
+    cur.execute(
+        "SELECT sum(valor_total) FROM silver.portal_bolsa_familia WHERE referencia = competencia"
+    )
+    valor_silver = cur.fetchone()[0]
+    assert valor_gold == valor_silver
+    assert valor_gold == VALOR_REFERENCIA_ATUAL
+    
