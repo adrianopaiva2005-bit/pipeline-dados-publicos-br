@@ -63,6 +63,8 @@ O que o MDS declara: a ficha do indicador IN001 (SAGICAD, editada em 29/09/2026)
 
 O que não foi verificado: a causa da diferença com o painel. A ficha não diz como a família é identificada na folha (o CSV do Portal não tem coluna de família), como trata parcelas com referência anterior à competência, nem se o Portal e o painel usam a mesma extração. Os valores municipais do VIS Data vêm de capturas de tela, e o arquivo local tem data de modificação de 24/09/2026. Como a ficha admite revisões retroativas, as duas bases podem ser de momentos diferentes, mas isso não foi confirmado.
 
+Ranking per capita: usando o valor da referência atual (`valor_referencia_per_capita`) em vez do valor total (`valor_total_per_capita`), os cinco municípios com maior valor per capita são os mesmos e ficam nas mesmas posições: Itaubal (AP), Autazes (AM), Cachoeira Grande (MA), Serrano do Maranhão (MA) e Rodelas (BA). Os valores caem entre 0,2% e 3,1% (em Itaubal, de R$ 272,19 para R$ 263,76). A comparação exclui o município sem população (Boa Esperança do Norte). O per capita por contagem de parcelas não foi testado, porque a gold não guarda a contagem da referência atual.
+
 ## Como executar
 
 O projeto usa Python 3.14, fixado em `.python-version`. O pipeline completo roda com um único comando, que executa ingestão, carga bronze, silver, gold e os testes de qualidade, parando no primeiro erro:
@@ -92,4 +94,3 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 ## Próximos passos
 
 - Procurar documentação que explique como a família é identificada na folha de pagamento e se a base do Portal é a mesma do painel. A ficha IN001 define o indicador, mas não explica a diferença observada.
-- Avaliar o per capita pela referência atual em vez do total de parcelas e verificar se o ranking dos cinco maiores muda.
