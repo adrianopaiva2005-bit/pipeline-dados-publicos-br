@@ -28,7 +28,7 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 
 - Boa Esperança do Norte (MT) não tem população na tabela do Censo usada e fica sem valor per capita. Recebeu R$ 78.936,00, cerca de 0,0006% do total.
 - A população é de 2022 e os pagamentos são de 2026.
-- Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Esse número ainda não foi confrontado com uma fonte oficial (famílias beneficiárias no painel do MDS) e deve ser lido com cautela.
+- Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Em Itaubal (AP), o painel VIS Data do MDS registra 2.024 famílias beneficiárias em agosto de 2026 (cerca de 36 por 100 habitantes) e R$ 1.537.777,00 repassados, contra 2.074 parcelas e R$ 1.523.977,00 no pipeline. A cobertura alta vem, portanto, da fonte oficial. A diferença (50 parcelas, cerca de 2,5%, e R$ 13.800, cerca de 0,9%) não teve a causa verificada e pode envolver definições diferentes (o painel conta famílias por mês de referência e o CSV conta parcelas por competência). Os demais municípios do ranking ainda não foram confrontados, e os valores do painel foram lidos de capturas de tela.
 - A análise cobre uma única competência, não é série histórica.
 
 ## Como executar
@@ -59,5 +59,5 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 
 ## Próximos passos
 
-- Confrontar a cobertura dos municípios com maior per capita com o número de famílias do painel do MDS.
+- Confrontar com o VIS Data os demais municípios de maior per capita (Autazes, Cachoeira Grande, Serrano do Maranhão e Rodelas) e investigar a diferença pequena observada em Itaubal.
 - Validar a ingestão do Portal dentro do orquestrador.
