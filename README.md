@@ -33,7 +33,7 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 
 ## Como executar
 
-O pipeline completo roda com um único comando, que executa ingestão, carga bronze, silver, gold e os testes de qualidade, parando no primeiro erro:
+O projeto usa Python 3.14, fixado em `.python-version`. O pipeline completo roda com um único comando, que executa ingestão, carga bronze, silver, gold e os testes de qualidade, parando no primeiro erro:
 
     uv run python src/pipeline/run_pipeline.py
 
@@ -43,6 +43,8 @@ Para reaproveitar os arquivos já baixados em `data/` (útil porque o CSV do Por
 
 A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: cada `load_*` limpa os dados que vai recarregar e cada SQL recria suas tabelas, então o pipeline pode ser executado várias vezes sem duplicar valores.
 
+As execuções validadas até aqui usaram `--pular-ingestao`; a ingestão do Portal (CSV de ~2 GB) ainda não foi exercitada pelo orquestrador.
+
 ## Testes
 
 Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
@@ -50,5 +52,5 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 ## Próximos passos
 
 - Confrontar a cobertura dos municípios com maior per capita com o número de famílias do painel do MDS.
-- Orquestrar o pipeline de ponta a ponta.
 - Construir um dashboard com os resultados.
+- Validar a ingestão do Portal dentro do orquestrador.
