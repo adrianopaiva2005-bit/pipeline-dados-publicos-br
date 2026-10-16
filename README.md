@@ -28,8 +28,18 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 
 - Boa Esperança do Norte (MT) não tem população na tabela do Censo usada e fica sem valor per capita. Recebeu R$ 78.936,00, cerca de 0,0006% do total.
 - A população é de 2022 e os pagamentos são de 2026.
-- Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes, contra 9,26 no Brasil. Em Itaubal (AP), o painel VIS Data do MDS registra 2.024 famílias beneficiárias em agosto de 2026 (cerca de 36 por 100 habitantes) e R$ 1.537.777,00 repassados, contra 2.074 parcelas e R$ 1.523.977,00 no pipeline. A cobertura alta vem, portanto, da fonte oficial. A diferença (50 parcelas, cerca de 2,5%, e R$ 13.800, cerca de 0,9%) não teve a causa verificada e pode envolver definições diferentes (o painel conta famílias por mês de referência e o CSV conta parcelas por competência). Os demais municípios do ranking ainda não foram confrontados, e os valores do painel foram lidos de capturas de tela.
+- Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes no pipeline, contra 9,26 no Brasil. O painel VIS Data do MDS, consultado para os cinco primeiros do ranking (agosto de 2026), registra de 36 a 39 famílias por 100 habitantes, então o padrão aparece nas duas fontes. Os números diferem de município para município, conforme a tabela abaixo, e a causa dessas diferenças não foi verificada. Os valores do painel foram lidos de capturas de tela.
 - A análise cobre uma única competência, não é série histórica.
+
+Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcentagens são calculadas sobre o valor do pipeline, e o sinal indica como o painel fica em relação a ele.
+
+| Município | Parcelas (pipeline) | Famílias (VIS Data) | Diferença na contagem | Valor (pipeline) | Valor (VIS Data) | Diferença no valor |
+|---|---|---|---|---|---|---|
+| Itaubal (AP) | 2.074 | 2.024 | −2,4% | R$ 1.523.977,00 | R$ 1.537.777,00 | +0,9% |
+| Autazes (AM) | 15.716 | 15.932 | +1,4% | R$ 10.921.755,00 | R$ 11.084.267,00 | +1,5% |
+| Cachoeira Grande (MA) | 3.623 | 3.653 | +0,8% | R$ 2.514.014,00 | R$ 2.539.489,00 | +1,0% |
+| Serrano do Maranhão (MA) | 3.813 | 4.011 | +5,2% | R$ 2.618.406,00 | R$ 2.745.766,00 | +4,9% |
+| Rodelas (BA) | 3.885 | 3.922 | +1,0% | R$ 2.621.540,00 | R$ 2.650.190,00 | +1,1% |
 
 ## Como executar
 
@@ -59,4 +69,4 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 
 ## Próximos passos
 
-- Confrontar com o VIS Data os demais municípios de maior per capita (Autazes, Cachoeira Grande, Serrano do Maranhão e Rodelas) e investigar a diferença pequena observada em Itaubal.
+- Investigar a causa das diferenças entre o painel VIS Data e o CSV do Portal, começando pela documentação de cada fonte e por Serrano do Maranhão, onde a diferença é maior.
