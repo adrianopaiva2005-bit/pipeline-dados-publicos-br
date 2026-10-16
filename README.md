@@ -37,7 +37,7 @@ O projeto usa Python 3.14, fixado em `.python-version`. O pipeline completo roda
 
     uv run python src/pipeline/run_pipeline.py
 
-Para reaproveitar os arquivos já baixados em `data/` (útil porque o CSV do Portal tem cerca de 2 GB):
+Para pular a ingestão e reaproveitar os arquivos já gerados em `data/` (sem consultar as APIs do IBGE de novo e sem reler o CSV do Portal, de cerca de 2 GB, que precisa ser baixado manualmente):
 
     uv run python src/pipeline/run_pipeline.py --pular-ingestao
 
@@ -60,4 +60,4 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 ## Próximos passos
 
 - Confrontar com o VIS Data os demais municípios de maior per capita (Autazes, Cachoeira Grande, Serrano do Maranhão e Rodelas) e investigar a diferença pequena observada em Itaubal.
-- Validar a ingestão do Portal dentro do orquestrador.
+- Exibir uma mensagem clara quando o CSV do Portal não estiver em `data/` e testar essa situação.
