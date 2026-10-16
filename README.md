@@ -45,6 +45,14 @@ A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: c
 
 As execuções validadas até aqui usaram `--pular-ingestao`; a ingestão do Portal (CSV de ~2 GB) ainda não foi exercitada pelo orquestrador.
 
+## Dashboard
+
+O dashboard em Streamlit lê somente `gold.bolsa_familia_per_capita` e tem três abas: Regiões (valor total e per capita por região), Ranking (municípios ordenados por valor per capita, valor total ou parcelas por 100 habitantes, com filtro de população mínima) e Municípios (busca por nome e filtro por UF). Os totais do topo conferem com o pipeline: R$ 12.763.249.759,00, 18.809.420 parcelas, 5.571 municípios e 203.080.756 habitantes.
+
+Com o PostgreSQL rodando e o pipeline já executado, inicie o app com `uv run streamlit run dashboard/app.py`.
+
+O app abre em `http://localhost:8501`. As credenciais vêm do `.env`. Nas ordenações por valor per capita e por parcelas por 100 habitantes, o dashboard exibe um aviso de cautela sobre a cobertura alta dos municípios pequenos. Na aba Municípios, os valores aparecem com ponto decimal e sem separador de milhar, porque o `st.column_config` não aceita formato de localidade; os números do topo seguem o padrão brasileiro.
+
 ## Testes
 
 Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o número de linhas, os totais de valor, parcelas e população, a única exceção sem população (Boa Esperança do Norte) e o teto de cobertura de 40 parcelas por 100 habitantes. Dependem do PostgreSQL local com os dados da competência 202608, então não rodam em CI.
@@ -52,5 +60,4 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 ## Próximos passos
 
 - Confrontar a cobertura dos municípios com maior per capita com o número de famílias do painel do MDS.
-- Construir um dashboard com os resultados.
 - Validar a ingestão do Portal dentro do orquestrador.
