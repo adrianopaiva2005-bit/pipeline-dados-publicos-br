@@ -41,6 +41,24 @@ Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcenta
 | Serrano do Maranhão (MA) | 3.813 | 4.011 | +5,2% | R$ 2.618.406,00 | R$ 2.745.766,00 | +4,9% |
 | Rodelas (BA) | 3.885 | 3.922 | +1,0% | R$ 2.621.540,00 | R$ 2.650.190,00 | +1,1% |
 
+## Comparação com a referência atual
+
+A primeira tabela compara o VIS Data com o total do pipeline, que inclui pagamentos retroativos (referência anterior à competência). A tabela abaixo usa só a referência atual (`referencia = competencia`) em agosto de 2026. As porcentagens usam o valor do pipeline como base, e o sinal indica a diferença do VIS Data em relação a ele.
+
+| Município | Parcelas, ref. atual (= NIS distintos) | Famílias (VIS Data) | Diferença na contagem |
+|---|---|---|---|
+| Itaubal (AP) | 2.003 | 2.024 | +1,0% |
+| Autazes (AM) | 15.672 | 15.932 | +1,7% |
+| Cachoeira Grande (MA) | 3.610 | 3.653 | +1,2% |
+| Serrano do Maranhão (MA) | 3.802 | 4.011 | +5,5% |
+| Rodelas (BA) | 3.875 | 3.922 | +1,2% |
+
+Com a referência atual, o VIS Data fica acima do pipeline nos cinco municípios, tanto na contagem quanto no valor. Em Itaubal, a diferença de valor (+4,1%) é maior que a de contagem (+1,0%), e isso não foi explicado.
+
+O que foi verificado: cada linha do CSV do Portal é um pagamento individual (há colunas de favorecido e valor da parcela, mas nenhuma de família ou domicílio), então a coluna `parcelas` do pipeline conta pagamentos. Nos cinco municípios, o número de NIS distintos é igual ao número de linhas da referência atual, nenhum NIS aparece mais de uma vez nessa referência, e os retroativos não acrescentam NIS novos. Essa checagem foi feita apenas nesses cinco municípios, não no Brasil inteiro.
+
+O que não foi verificado: a causa da diferença com o painel. Não se sabe o que o VIS Data chama de "família" nem como cada fonte trata pagamentos fora do mês de referência. Os valores do VIS Data vêm de capturas de tela, e o CSV foi baixado em 24/09/2026, então as duas bases podem ser de momentos diferentes.
+
 ## Como executar
 
 O projeto usa Python 3.14, fixado em `.python-version`. O pipeline completo roda com um único comando, que executa ingestão, carga bronze, silver, gold e os testes de qualidade, parando no primeiro erro:
@@ -69,4 +87,5 @@ Os testes de qualidade (`uv run pytest -v`) verificam, nas tabelas gold, o núme
 
 ## Próximos passos
 
-- Investigar a causa das diferenças entre o painel VIS Data e o CSV do Portal, começando pela documentação de cada fonte e por Serrano do Maranhão, onde a diferença é maior.
+- Obter a definição de "famílias beneficiárias" (VIS Data) e a descrição das colunas do CSV (dicionário de dados do Portal) e compará-las.
+- Avaliar o per capita pela referência atual em vez do total de parcelas e verificar se o ranking dos cinco maiores muda.
