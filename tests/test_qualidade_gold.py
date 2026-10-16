@@ -71,4 +71,3 @@ def test_valor_referencia_atual_confere_com_silver(cur):
     valor_silver = cur.fetchone()[0]
     assert valor_gold == valor_silver
     assert valor_gold == VALOR_REFERENCIA_ATUAL
-    
