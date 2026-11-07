@@ -31,10 +31,10 @@ O Nordeste concentra cerca de 46% do valor (R$ 5,93 bilhões). Em valor per capi
 - Os municípios com maior per capita têm de 37 a 38 parcelas por 100 habitantes no pipeline, contra 9,26 no Brasil. O painel VIS Data do MDS, consultado para os cinco primeiros do ranking (agosto de 2026), registra de 36 a 39 famílias por 100 habitantes, então o padrão aparece nas duas fontes. Os números diferem de município para município, conforme a tabela abaixo, e a causa dessas diferenças não foi verificada. Os valores do painel foram lidos de capturas de tela.
 - A análise cobre uma única competência, não é série histórica.
 
-Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcentagens são calculadas sobre o valor do pipeline, e o sinal indica como o painel fica em relação a ele.
+Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcentagens são calculadas sobre os números do pipeline, e o sinal indica como o painel fica em relação a eles.
 
 | Município | Parcelas (pipeline) | Famílias (VIS Data) | Diferença na contagem | Valor (pipeline) | Valor (VIS Data) | Diferença no valor |
-|---|---|---|---|---|---|---|
+|---|---:|---:|---:|---:|---:|---:|
 | Itaubal (AP) | 2.074 | 2.024 | −2,4% | R$ 1.523.977,00 | R$ 1.537.777,00 | +0,9% |
 | Autazes (AM) | 15.716 | 15.932 | +1,4% | R$ 10.921.755,00 | R$ 11.084.267,00 | +1,5% |
 | Cachoeira Grande (MA) | 3.623 | 3.653 | +0,8% | R$ 2.514.014,00 | R$ 2.539.489,00 | +1,0% |
@@ -43,25 +43,27 @@ Comparação em agosto de 2026 entre o pipeline e o painel VIS Data. As porcenta
 
 ## Comparação com a referência atual
 
-A primeira tabela compara o VIS Data com o total do pipeline, que inclui as parcelas com mês de referência anterior à competência (chamadas aqui de retroativas; o dicionário do Portal não usa esse termo). A tabela abaixo usa só as parcelas com as duas colunas iguais (`referencia = competencia`) em agosto de 2026. As porcentagens usam o valor do pipeline como base, e o sinal indica a diferença do VIS Data em relação a ele.
+A primeira tabela compara o VIS Data com o total do pipeline, que inclui as parcelas com mês de referência anterior à competência (chamadas aqui de retroativas; o dicionário do Portal não usa esse termo). A tabela abaixo usa só as parcelas com as duas colunas iguais (`referencia = competencia`) em agosto de 2026. As porcentagens usam a contagem de parcelas do pipeline como base, e o sinal indica a diferença do VIS Data em relação a ela.
 
 | Município | Parcelas, ref. atual (= NIS distintos) | Famílias (VIS Data) | Diferença na contagem |
-|---|---|---|---|
+|---|---:|---:|---:|
 | Itaubal (AP) | 2.003 | 2.024 | +1,0% |
 | Autazes (AM) | 15.672 | 15.932 | +1,7% |
 | Cachoeira Grande (MA) | 3.610 | 3.653 | +1,2% |
 | Serrano do Maranhão (MA) | 3.802 | 4.011 | +5,5% |
 | Rodelas (BA) | 3.875 | 3.922 | +1,2% |
 
-Com a referência atual, o VIS Data fica acima do pipeline nos cinco municípios, tanto na contagem quanto no valor. Em Itaubal, a diferença de valor (+4,1%) é maior que a de contagem (+1,0%), e isso não foi explicado.
+Com a referência atual, o VIS Data fica acima do pipeline na contagem nos cinco municípios. No valor, só Itaubal foi calculado com a referência atual: a diferença (+4,1%) é maior que a de contagem (+1,0%), e isso não foi explicado.
 
-No CSV, `MÊS COMPETÊNCIA` é 202608 em todas as linhas e `MÊS REFERÊNCIA` varia de 202601 a 202608. As linhas com as duas colunas iguais são 18.778.626 (99,84%). A descrição das colunas no dicionário de dados do Portal (competência como o mês a que a parcela se refere, referência como o mês da folha de pagamento) não esclarece por que há referências anteriores à competência, então o sentido exato delas não foi confirmado. O dicionário também lista a coluna `DATA DISPONIBILIZAÇÃO`, que não existe no arquivo local (data de modificação: 24/09/2026).
+No CSV, `MÊS COMPETÊNCIA` é 202608 em todas as linhas e `MÊS REFERÊNCIA` varia de 202601 a 202608. As linhas com as duas colunas iguais são 18.778.626 (99,84%). A descrição das colunas no dicionário de dados do Portal define competência como o ano/mês da folha de pagamento e referência como o ano/mês a que se refere a parcela, o que é compatível com os dados, mas o dicionário não explica por que a folha de agosto inclui parcelas de meses anteriores; o motivo dessas parcelas não foi confirmado. O dicionário também lista a coluna `DATA DISPONIBILIZAÇÃO`, que não existe no arquivo local (data de modificação: 24/09/2026).
 
 O que foi verificado: cada linha do CSV do Portal é um pagamento individual (há colunas de favorecido e valor da parcela, mas nenhuma de família ou domicílio), então a coluna `parcelas` do pipeline conta pagamentos. Nos cinco municípios, o número de NIS distintos é igual ao número de linhas da referência atual, nenhum NIS aparece mais de uma vez nessa referência, e os retroativos não acrescentam NIS novos. Essa checagem foi feita apenas nesses cinco municípios, não no Brasil inteiro.
 
 O que o MDS declara: a ficha do indicador IN001 (SAGICAD, editada em 29/09/2026), para a qual o ícone de informação do VIS Data aponta, define a unidade estatística como família e o cálculo como "contagem distinta de famílias beneficiárias do Programa Bolsa Família constantes em folha de pagamento do período de referência". A fonte é a folha de pagamento operacionalizada pela Caixa, junto com o Cadastro Único. A ficha prevê revisão retroativa dos valores. No total nacional de agosto de 2026, o painel registra 19.289.215 famílias e R$ 13.056.767.658,00, contra 18.809.420 parcelas e R$ 12.763.249.759,00 no pipeline (+2,6% e +2,3%).
 
 O que não foi verificado: a causa da diferença com o painel. A ficha não diz como a família é identificada na folha (o CSV do Portal não tem coluna de família), como trata parcelas com referência anterior à competência, nem se o Portal e o painel usam a mesma extração. Os valores municipais do VIS Data vêm de capturas de tela, e o arquivo local tem data de modificação de 24/09/2026. Como a ficha admite revisões retroativas, as duas bases podem ser de momentos diferentes, mas isso não foi confirmado.
+
+Documentação consultada em 07/11/2026. A página "Origem dos Dados" do Portal da Transparência (https://portaldatransparencia.gov.br/origem-dos-dados) lista o Novo Bolsa Família como arquivo da Caixa Econômica Federal, enviado pelo MDS, com periodicidade mensal, dados desde 03/2023 e campo de observação vazio. O conjunto "Bolsa Família" do dados.gov.br (https://dados.gov.br/dados/conjuntos-dados/bolsa-familia), publicado pela SAGICAD/MDS, informa a quantidade de famílias beneficiárias e o valor repassado "através da folha de pagamento do Bolsa Família", por município e mês de referência, e menciona o uso do VIS Data. A ficha do indicador IN002 no Documenta Wiki (valor pago às famílias beneficiárias, editada em 29/09/2026) define o valor como a soma dos benefícios repassados constantes na folha de pagamento do "mês de referência", com fonte na base da folha operacionalizada pela Caixa, e prevê revisão retroativa dos valores. O dicionário do Portal define as colunas de competência e referência do CSV, mas a ficha do IN002 não diz a qual delas corresponde o seu "mês de referência", e nenhuma das fontes afirma que o Portal e o painel usam a mesma base ou o mesmo processamento; a página "Base de dados - Bolsa Família" do wiki não existe. Inferência deste projeto, não afirmação da fonte: como o IN002 é definido como uma soma de valores, a diferença de +2,3% não pode ser atribuída apenas à forma de identificar as famílias; o método de agregação do painel não foi verificado. Em 07/11/2026 o VIS Data estava indisponível e os valores do painel não puderam ser reconsultados.
 
 Ranking per capita: usando o valor da referência atual (`valor_referencia_per_capita`) em vez do valor total (`valor_total_per_capita`), os cinco municípios com maior valor per capita são os mesmos e ficam nas mesmas posições: Itaubal (AP), Autazes (AM), Cachoeira Grande (MA), Serrano do Maranhão (MA) e Rodelas (BA). Os valores caem entre 0,2% e 3,1% (em Itaubal, de R$ 272,19 para R$ 263,76). A comparação exclui o município sem população (Boa Esperança do Norte). O per capita por contagem de parcelas não foi testado, porque a gold não guarda a contagem da referência atual.
 
@@ -77,7 +79,7 @@ Para pular a ingestão e reaproveitar os arquivos já gerados em `data/` (sem co
 
 A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: cada `load_*` limpa os dados que vai recarregar e cada SQL recria suas tabelas, então o pipeline pode ser executado várias vezes sem duplicar valores.
 
-Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. Se o arquivo não existir, o pipeline para nessa etapa com uma mensagem indicando o que fazer, comportamento testado na mesma data.
+Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes então existentes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. Se o arquivo não existir, o pipeline para nessa etapa com uma mensagem indicando o que fazer, comportamento testado na mesma data.
 
 ## Dashboard
 
@@ -93,4 +95,4 @@ Os testes de qualidade (`uv run pytest -v`, seis testes) verificam, nas tabelas 
 
 ## Próximos passos
 
-- Procurar documentação que explique como a família é identificada na folha de pagamento e se a base do Portal é a mesma do painel. A ficha IN001 define o indicador, mas não explica a diferença observada.
+- Quando o VIS Data voltar, reconsultar o IN002 de agosto de 2026 para confirmar o total do painel (R$ 13.056.767.658,00) e anotar a data de atualização exibida. Se o download funcionar, comparar também com o valor repassado de 202608 no CSV agregado do conjunto "Bolsa Família" do dados.gov.br, para ver se o desvio vem do painel ou do Portal.
