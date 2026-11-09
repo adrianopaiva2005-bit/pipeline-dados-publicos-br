@@ -94,3 +94,36 @@ def test_per_capita_calculos_conferem_com_as_tabelas_de_origem(cur):
     )
     assert cur.fetchone()[0] == 0
 
+
+def test_mapeamento_siafi_ibge_nao_perde_grupos_da_bronze(cur):
+    cur.execute(
+        """
+        SELECT count(*)
+        FROM (
+            SELECT DISTINCT uf, codigo_siafi, municipio
+            FROM bronze.portal_bolsa_familia
+        ) b
+        LEFT JOIN silver.siafi_ibge s
+            ON s.uf = b.uf
+           AND s.codigo_siafi = b.codigo_siafi
+           AND s.municipio_portal = b.municipio
+        WHERE s.codigo_ibge IS NULL
+        """
+    )
+    assert cur.fetchone()[0] == 0
+
+
+def test_mapeamento_siafi_ibge_nao_duplica_chaves_de_carga(cur):
+    cur.execute(
+        """
+        SELECT count(*)
+        FROM (
+            SELECT uf, codigo_siafi, municipio_portal
+            FROM silver.siafi_ibge
+            GROUP BY uf, codigo_siafi, municipio_portal
+            HAVING count(*) > 1
+        ) duplicados
+        """
+    )
+    assert cur.fetchone()[0] == 0
+
