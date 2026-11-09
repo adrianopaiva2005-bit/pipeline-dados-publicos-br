@@ -71,3 +71,26 @@ def test_valor_referencia_atual_confere_com_silver(cur):
     valor_silver = cur.fetchone()[0]
     assert valor_gold == valor_silver
     assert valor_gold == VALOR_REFERENCIA_ATUAL
+
+
+def test_per_capita_calculos_conferem_com_as_tabelas_de_origem(cur):
+    cur.execute(
+        """
+        SELECT count(*)
+        FROM gold.bolsa_familia_per_capita g
+        JOIN gold.bolsa_familia_municipio m
+            ON m.competencia = g.competencia
+           AND m.codigo_ibge = g.codigo_ibge
+        LEFT JOIN bronze.ibge_populacao p
+            ON p.codigo_ibge = m.codigo_ibge
+        WHERE g.populacao IS DISTINCT FROM p.populacao
+           OR g.valor_total_per_capita IS DISTINCT FROM
+                round(m.valor_total / p.populacao, 2)
+           OR g.valor_referencia_per_capita IS DISTINCT FROM
+                round(m.valor_referencia_atual / p.populacao, 2)
+           OR g.parcelas_por_100_hab IS DISTINCT FROM
+                round(m.parcelas::numeric * 100 / p.populacao, 2)
+        """
+    )
+    assert cur.fetchone()[0] == 0
+
