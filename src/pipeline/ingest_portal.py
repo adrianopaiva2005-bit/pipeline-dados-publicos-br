@@ -1,10 +1,19 @@
+import argparse
 import csv
-import sys
 from collections import defaultdict
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-CAMINHO_PADRAO = Path("data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv")
+
+COMPETENCIA_PADRAO = "202608"
+
+
+def caminho_bruto(competencia: str) -> Path:
+    return Path(
+        f"data/bronze/portal_transparencia/{competencia}_NovoBolsaFamilia.csv"
+    )
+
+
 COLUNAS = [
     "MÊS COMPETÊNCIA",
     "MÊS REFERÊNCIA",
@@ -53,13 +62,13 @@ def agregar(caminho: Path):
     return grupos, lidas, descartadas
 
 
-def main():
-    caminho = Path(sys.argv[1]) if len(sys.argv) > 1 else CAMINHO_PADRAO
+def main(competencia: str = COMPETENCIA_PADRAO):
+    caminho = caminho_bruto(competencia)
     if not caminho.exists():
         raise SystemExit(
             f"CSV do Portal não encontrado: {caminho}\n"
             "Baixe o arquivo do Portal da Transparência (Novo Bolsa Família, "
-            "competência 202608) e coloque-o nessa pasta antes de executar."
+            f"competência {competencia}) e coloque-o nessa pasta antes de executar."
         )
     grupos, lidas, descartadas = agregar(caminho)
 
@@ -81,4 +90,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--competencia", default=COMPETENCIA_PADRAO, help="AAAAMM")
+    main(parser.parse_args().competencia)
