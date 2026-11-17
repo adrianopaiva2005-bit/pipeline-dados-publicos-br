@@ -27,6 +27,8 @@ ETAPAS = [
     ("sql", "gold_bolsa_familia_per_capita.sql", False),
 ]
 
+ETAPAS_COM_COMPETENCIA = {"ingest_portal", "load_portal"}
+
 
 def conectar() -> psycopg.Connection:
     return psycopg.connect(
@@ -38,10 +40,10 @@ def conectar() -> psycopg.Connection:
     )
 
 
-def rodar_python(modulo: str) -> None:
+def rodar_python(modulo: str, argumentos: list[str] | None = None) -> None:
     env = {**os.environ, "PYTHONPATH": str(RAIZ / "src")}
     subprocess.run(
-        [sys.executable, "-m", f"pipeline.{modulo}"],
+        [sys.executable, "-m", f"pipeline.{modulo}", *(argumentos or [])],
         cwd=RAIZ,
         env=env,
         check=True,
@@ -72,6 +74,11 @@ def main() -> int:
         action="store_true",
         help="não roda o pytest no final",
     )
+    parser.add_argument(
+        "--competencia",
+        default="202608",
+        help="competência do Portal da Transparência (AAAAMM)",
+    )
     args = parser.parse_args()
 
     load_dotenv(RAIZ / ".env")
@@ -86,7 +93,12 @@ def main() -> int:
         t0 = time.perf_counter()
         try:
             if tipo == "py":
-                rodar_python(nome)
+                argumentos = (
+                    ["--competencia", args.competencia]
+                    if nome in ETAPAS_COM_COMPETENCIA
+                    else []
+                )
+                rodar_python(nome, argumentos)
             else:
                 rodar_sql(nome)
         except Exception as erro:
