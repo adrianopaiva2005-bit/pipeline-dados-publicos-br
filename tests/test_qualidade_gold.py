@@ -127,3 +127,16 @@ def test_mapeamento_siafi_ibge_nao_duplica_chaves_de_carga(cur):
     )
     assert cur.fetchone()[0] == 0
 
+
+def test_silver_preserva_linhas_parcelas_e_valor_da_bronze(cur):
+    cur.execute(
+        "SELECT count(*), sum(parcelas), sum(valor_total) "
+        "FROM bronze.portal_bolsa_familia"
+    )
+    bronze = cur.fetchone()
+    cur.execute(
+        "SELECT count(*), sum(parcelas), sum(valor_total) "
+        "FROM silver.portal_bolsa_familia"
+    )
+    silver = cur.fetchone()
+    assert silver == bronze
