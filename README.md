@@ -81,6 +81,8 @@ A opção `--sem-testes` omite o pytest no final. As cargas são idempotentes: c
 
 Em 16/10/2026, o pipeline completo (sem `--pular-ingestao`) foi executado com sucesso em 48,9 s: 18.809.420 linhas lidas, 14.694 grupos, R$ 12.763.249.759,00 e os cinco testes então existentes aprovados. A ingestão do IBGE e da população baixa os dados das APIs, mas a etapa do Portal não faz download: ela lê o arquivo `data/bronze/portal_transparencia/202608_NovoBolsaFamilia.csv`, que precisa ser baixado do Portal da Transparência (Download de dados, Novo Bolsa Família, competência 202608) e colocado nessa pasta antes da execução. Se o arquivo não existir, o pipeline para nessa etapa com uma mensagem indicando o que fazer, comportamento testado na mesma data.
 
+Em 17/11/2026, o pipeline foi executado com `--pular-ingestao`, ou seja, sem refazer as etapas de ingestão e usando os arquivos já presentes em `data/bronze`. Todas as cargas e todos os SQLs terminaram sem erro, a bronze do Portal ficou com 14.694 grupos, 18.809.420 parcelas e R$ 12.763.249.759,00, e os dez testes foram aprovados. O pipeline concluiu em 9,5 s. Essa execução valida o reprocessamento das camadas silver e gold a partir dos dados já baixados, não o download.
+
 ## Dashboard
 
 O dashboard em Streamlit lê somente `gold.bolsa_familia_per_capita` e tem três abas: Regiões (valor total e per capita por região), Ranking (municípios ordenados por valor per capita, valor total ou parcelas por 100 habitantes, com filtro de população mínima) e Municípios (busca por nome e filtro por UF). Os totais do topo conferem com o pipeline: R$ 12.763.249.759,00, 18.809.420 parcelas, 5.571 municípios e 203.080.756 habitantes.
